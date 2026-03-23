@@ -1,0 +1,30 @@
+int redPin = 11;
+int greenPin = 3;
+void setup()
+{ 
+  pinMode(redPin, OUTPUT);
+  pinMode(greenPin, OUTPUT);
+}
+void loop()
+{
+  for (int fadeValue = 0; fadeValue <= 255; fadeValue += 5)
+  {
+    analogWrite (redPin, fadeValue);
+    delay (30);
+  }
+  for (int fadeValue = 255; fadeValue >= 0; fadeValue -= 5)
+  {
+    analogWrite (redPin, fadeValue);
+    delay (30);
+  }
+  for (int fadeValue = 0; fadeValue <= 255; fadeValue += 5)
+  {
+    analogWrite (greenPin, fadeValue);
+    delay (30);
+  }
+  for (int fadeValue = 255; fadeValue >= 0; fadeValue -= 5)
+  {
+    analogWrite (greenPin, fadeValue);
+    delay (30);
+  }
+}
