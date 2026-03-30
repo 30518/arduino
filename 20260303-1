@@ -1,0 +1,82 @@
+int redPin = 11;
+int greenPin = 10;
+int bluePin = 9;
+int buttonPin = 2;
+
+boolean currentButton = LOW;
+boolean lastButton = LOW;
+int ledMode;
+
+void setup()
+{
+  pinMode (buttonPin, INPUT);
+}
+
+void loop()
+{
+  currentButton = debounce(lastButton);
+  if(lastButton ==LOW && currentButton ==HIGH)
+  {
+    ledMode++;
+  }
+  lastButton = currentButton;
+  colorMode(ledMode);
+  if (ledMode == 8)
+  {
+    ledMode = 0;
+  }
+}
+
+boolean debounce (boolean push)
+{
+  boolean current = digitalRead(buttonPin);
+  
+  if (push != current)
+  {
+    delay(50);
+    current = digitalRead(buttonPin);
+  }
+  return current;
+}
+void setColor(int red, int green, int blue)
+{
+  analogWrite(redPin, red);
+  analogWrite(greenPin,green);
+  analogWrite(bluePin, blue);
+}
+
+void colorMode(int ledColor)
+{
+  if (ledColor == 1)
+  {
+    setColor(255,0,0);
+  }
+  else if (ledColor == 2)
+  {
+    setColor(255,94,0);
+  }
+  else if (ledColor == 3)
+  {
+    setColor(255,187,0);
+  }
+  else if (ledColor == 4)
+  {
+    setColor(0,255,0);
+  }
+  else if (ledColor == 5)
+  {
+    setColor(0,0,255);
+  }
+  else if (ledColor == 6)
+  {
+    setColor(5,0,153);
+  }
+  else if (ledColor == 7)
+  {
+    setColor(95,0,255);
+  }
+  else
+  {
+    setColor(0,0,0);
+  }
+}
