@@ -1,0 +1,42 @@
+int trigPin = 2;
+int echoPin = 3;
+
+int redPin = 12;
+int yellowPin = 10;
+int greenPin = 8;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+  pinMode(redPin, OUTPUT);
+  pinMode(yellowPin, OUTPUT);
+  pinMode(greenPin, OUTPUT);
+  Serial.println("HC-SR04. distance measure start!");
+}
+void loop() {
+  float duration, distance;
+  digitalWrite(trigPin, HIGH); delay(10);
+  digitalWrite(trigPin, LOW);
+  duration = pulseIn(echoPin, HIGH);
+  distance = 340*duration/10000/2;
+  Serial.print("\nDuration: "); Serial.print(duration);
+  Serial.print("\nDistance: "); Serial.print(distance);
+  Serial.print("cm\n"); delay(500);
+
+  if(distance < 10) {
+    digitalWrite(redPin, HIGH);
+    digitalWrite(yellowPin, LOW);
+    digitalWrite(greenPin, LOW);
+  }
+  else if(distance < 20) {
+    digitalWrite(redPin, LOW);
+    digitalWrite(yellowPin, HIGH);
+    digitalWrite(greenPin, LOW);
+  }
+  else {
+    digitalWrite(redPin, LOW);
+    digitalWrite(yellowPin, LOW);
+    digitalWrite(greenPin, HIGH);
+  }
+}
