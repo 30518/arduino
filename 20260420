@@ -1,0 +1,101 @@
+int trigPin = 11;
+int echoPin = 12;
+byte digits[10][7] = 
+{
+  {1,1,1,1,1,1,0},
+  {0,1,1,0,0,0,0},
+  {1,1,0,1,1,0,1},
+  {1,1,1,1,0,0,1},
+  {0,1,1,0,0,1,1},
+  {1,0,1,1,0,1,1},
+  {1,0,1,1,1,1,1},
+  {1,1,1,0,0,0,0},
+  {1,1,1,1,1,1,1},
+  {1,1,1,1,0,1,1},
+};
+byte segPin[7] = {2,3,4,5,6,7,8};
+byte dpPin = 9, digitNum = 0;
+int dist = 0;
+int delayDigit = 2, delayTime = 500;
+void setup() {
+  Serial.begin(9600);
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+  Serial.println("HC-SR04. distance measure start!");
+  for(int i=0; i<7; i++)
+  {
+    pinMode(segPin[i],OUTPUT);
+  }
+  pinMode(dpPin, OUTPUT);
+}
+
+void loop() {
+  float duration, distance;
+  digitalWrite(trigPin, HIGH); delay(100);
+  digitalWrite(trigPin, LOW);
+  duration = pulseIn(echoPin, HIGH);
+  distance = 340*duration/10000/2;
+  Serial.print("\nDistance: "); Serial.print(distance);
+  Serial.print("cm");
+  Serial.print("\ndist: "); Serial.print(dist);
+  delay(200);
+  dist = (int)distance;
+  if(dist>=100) {
+    for(int i=0; i<7; i++) {
+      digitalWrite(segPin[i], LOW);
+      delay(delayDigit);
+    }
+    digitalWrite(dpPin, HIGH);
+    delay(delayDigit);
+  }
+  else {
+    digitalWrite(dpPin, LOW);
+    delay(delayDigit);
+
+    if (distance < 10) dist = 0;
+    else if (distance < 20) dist = 1;
+    else if (distance < 30) dist = 2;
+    else if (distance < 40) dist = 3;
+    else if (distance < 50) dist = 4;
+    else if (distance < 60) dist = 5;
+    else if (distance < 70) dist = 6;
+    else if (distance < 80) dist = 7;
+    else if (distance < 90) dist = 8;
+    else if (distance < 100) dist = 9;
+
+    for(int i=0;i<7;i++) {
+      switch(dist) {
+        case 0:
+              digitalWrite(segPin[i],digits[0][i]);
+              delay(delayDigit); break;
+        case 1:
+              digitalWrite(segPin[i],digits[1][i]);
+              delay(delayDigit); break;
+        case 2:
+              digitalWrite(segPin[i],digits[2][i]);
+              delay(delayDigit); break;
+        case 3:
+              digitalWrite(segPin[i],digits[3][i]);
+              delay(delayDigit); break;
+        case 4:
+              digitalWrite(segPin[i],digits[4][i]);
+              delay(delayDigit); break;
+        case 5:
+              digitalWrite(segPin[i],digits[5][i]);
+              delay(delayDigit); break;
+        case 6:
+              digitalWrite(segPin[i],digits[6][i]);
+              delay(delayDigit); break;
+        case 7:
+              digitalWrite(segPin[i],digits[7][i]);
+              delay(delayDigit); break;
+        case 8:
+              digitalWrite(segPin[i],digits[8][i]);
+              delay(delayDigit); break;
+        case 9:
+              digitalWrite(segPin[i],digits[9][i]);
+              delay(delayDigit); break;
+      }
+    }
+  }
+}
