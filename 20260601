@@ -1,0 +1,80 @@
+#include <Keypad.h>
+
+
+const byte ROWS = 4;
+const byte COLS = 3;
+char Keys[ROWS][COLS] = {
+  {'1', '2', '3'},
+  {'4', '5', '6'},
+  {'7', '8', '9'},
+  {'*', '0', '#'},
+};
+byte rowPins[ROWS] = {8, 7, 6, 5};
+byte colPins[COLS] = {4, 3, 2};
+Keypad key = Keypad( makeKeymap(Keys), rowPins, colPins, ROWS, COLS);
+
+int notes[10] = {262, 294, 330, 349, 392, 440, 494, 523, 587, 659};
+
+void setup() {
+  Serial.begin(9600);
+}
+void loop() {
+  char myKey = key.getKey();
+  if(myKey) {
+    Serial.println(myKey);
+
+    if(myKey == '*') {
+      for(int i = 0; i <= 10; i++) {
+        tone(9, notes[i], 500);
+        delay(50);
+      }
+    }
+
+    else if(myKey == '#') {
+      for(int i = 10; i >= 0; i--) {
+        tone(9, notes[i], 500);
+        delay(50);
+      }
+    }
+    else if(myKey == '1') {
+      tone(9, 262, 500);
+      delay(50);
+    }
+    else if(myKey == '2') {
+      tone(9, 294, 500);
+      delay(50);
+    }
+    else if(myKey == '3') {
+      tone(9, 330, 500);
+      delay(50);
+    }
+    else if(myKey == '4') {
+      tone(9, 349, 500);
+      delay(50);
+    }
+    else if(myKey == '5') {
+      tone(9, 392, 500);
+      delay(50);
+    }
+    else if(myKey == '6') {
+      tone(9, 440, 500);
+      delay(50);
+    }
+    else if(myKey == '7') {
+      tone(9, 494, 500);
+      delay(50);
+    }
+    else if(myKey == '8') {
+      tone(9, 523, 500);
+      delay(50);
+    }
+    else if(myKey == '9') {
+      tone(9, 589, 500);
+      delay(50);
+    }
+    else if(myKey == '0') {
+      tone(9, 659, 500);
+      delay(50);
+    }
+  }
+}
